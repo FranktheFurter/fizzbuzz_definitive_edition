@@ -64,9 +64,9 @@ class _FizzbuzzState extends State<Fizzbuzz> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ListView.builder(
-        itemCount: 10000,
+        itemCount: 9999,
         itemBuilder: (context, index) {
-          return RowElement(index);
+          return RowElement(index + 1);
         },
       ),
     );
