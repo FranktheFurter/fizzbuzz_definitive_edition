@@ -43,9 +43,6 @@ class _MyAppState extends State<MyApp> with SingleTickerProviderStateMixin {
         toggleableActiveColor: Colors.red[500],
       ),
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Fizzbuzz Definitive Edition'),
-        ),
         body: SafeArea(
             child: Column(
           children: [
