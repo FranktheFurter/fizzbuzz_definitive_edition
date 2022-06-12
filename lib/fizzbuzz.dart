@@ -15,6 +15,8 @@ class Fizzbuzz extends StatefulWidget {
 }
 
 class _FizzbuzzState extends State<Fizzbuzz> {
+  ScrollController _scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -33,7 +35,7 @@ class _FizzbuzzState extends State<Fizzbuzz> {
                 border: Border.all(),
                 borderRadius: BorderRadius.all(Radius.circular(20)),
               ),
-              child: FizzContainer(),
+              child: FizzContainer(_scrollController),
             ),
           ),
         ),
@@ -44,15 +46,23 @@ class _FizzbuzzState extends State<Fizzbuzz> {
               children: [
                 ElevatedButton(
                   child: Text("Start"),
-                  onPressed: () {},
-                ),
-                ElevatedButton(
-                  child: Text("Pause"),
-                  onPressed: () {},
+                  onPressed: () {
+                    _scrollController.animateTo(
+                      _scrollController.position.maxScrollExtent,
+                      duration: Duration(seconds: 180),
+                      curve: Curves.linear,
+                    );
+                  },
                 ),
                 ElevatedButton(
                   child: Text("Reset"),
-                  onPressed: () {},
+                  onPressed: () {
+                    _scrollController.animateTo(
+                      _scrollController.position.minScrollExtent,
+                      duration: Duration(seconds: 1),
+                      curve: Curves.linear,
+                    );
+                  },
                 )
               ],
             ))
@@ -60,11 +70,14 @@ class _FizzbuzzState extends State<Fizzbuzz> {
     );
   }
 
-  Widget FizzContainer() {
+  Widget FizzContainer(ScrollController ctrl) {
+    ;
+
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ListView.builder(
-        itemCount: 9999,
+        controller: ctrl,
+        itemCount: 999,
         itemBuilder: (context, index) {
           return RowElement(index + 1);
         },
