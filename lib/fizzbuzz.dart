@@ -1,6 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:fizzbuzz_definitive_edition/mainstate.dart';
+import 'package:fizzbuzz_definitive_edition/model.dart';
 import 'package:flutter/material.dart';
+import 'package:mobx/mobx.dart';
 
 class Fizzbuzz extends StatefulWidget {
   const Fizzbuzz({
@@ -35,29 +38,6 @@ class _FizzbuzzState extends State<Fizzbuzz> {
             ),
           ),
         ),
-        // Padding(
-        //   padding: const EdgeInsets.symmetric(vertical: 64.0),
-        //   child: Row(
-        //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        //     children: [
-        //       ElevatedButton.icon(
-        //         onPressed: () {},
-        //         icon: Icon(Icons.play_arrow),
-        //         label: Text("Play"),
-        //       ),
-        //       ElevatedButton.icon(
-        //         onPressed: () {},
-        //         icon: Icon(Icons.pause),
-        //         label: Text("Pause"),
-        //       ),
-        //       ElevatedButton.icon(
-        //         onPressed: () {},
-        //         icon: Icon(Icons.restore),
-        //         label: Text("Resett"),
-        //       ),
-        //     ],
-        //   ),
-        // ),
       ],
     );
   }
@@ -76,23 +56,25 @@ class _FizzbuzzState extends State<Fizzbuzz> {
 
   Row RowElement(int index) {
     String replacementText = "";
-    for (int i = 0; i < 1; i++) {
-      if (index % 3 == 0) {
-        replacementText = "${replacementText}Fizz";
-      }
-      if (index % 5 == 0) {
-        replacementText = "${replacementText}Buzz";
+    bool matchFound = false;
+    for (int i = 0; i < mainState.matches.length; i++) {
+      if (index % mainState.matches[i].number == 0) {
+        replacementText = "$replacementText${mainState.matches[i].word}";
+        matchFound = true;
       }
     }
     return Row(children: [
-      Expanded(child: Center(child: Text("$index", style: TextStyle(fontSize: 32)))),
+      Expanded(
+        child: Center(child: Text("$index", style: TextStyle(fontSize: 24, color: matchFound ? Colors.red : Colors.white))),
+      ),
       Expanded(
           child: Center(
               child: Icon(
         Icons.arrow_right,
-        size: 32,
+        size: 24,
+        color: matchFound ? Colors.red : Colors.white,
       ))),
-      Expanded(child: Center(child: Text(replacementText, style: TextStyle(fontSize: 32)))),
+      Expanded(child: Center(child: Text(replacementText, style: TextStyle(fontSize: 24, color: matchFound ? Colors.red : Colors.white)))),
     ]);
   }
 }

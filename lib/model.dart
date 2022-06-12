@@ -1,6 +1,6 @@
 class WordNumberMatch {
-  WordNumberMatch(this.word, this.number);
+  WordNumberMatch({required this.word, required this.number});
 
-  final String word;
-  final int number;
+  String word;
+  int number;
 }
