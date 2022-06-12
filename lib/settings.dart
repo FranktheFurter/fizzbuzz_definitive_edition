@@ -68,10 +68,15 @@ class _SettingsState extends State<Settings> {
                   SizedBox(width: 32),
                   ElevatedButton.icon(
                       onPressed: () {
+                        if (mainState.number == 0 || mainState.word.isEmpty) {
+                          return;
+                        }
                         mainState.matchesToDisplay.add(WordNumberMatch(
                           word: mainState.word,
                           number: mainState.number,
                         ));
+                        mainState.number = 0;
+                        mainState.word = "";
                         setState(() {});
                       },
                       icon: Icon(Icons.add),
