@@ -21,10 +21,9 @@ class _FizzbuzzState extends State<Fizzbuzz> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         SizedBox(
-          height: 128,
+          height: 64,
           child: FittedBox(child: Text("Fizzbuzz")),
         ),
-        SizedBox(height: 32),
         Expanded(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -38,6 +37,25 @@ class _FizzbuzzState extends State<Fizzbuzz> {
             ),
           ),
         ),
+        Container(
+            height: 64,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  child: Text("Start"),
+                  onPressed: () {},
+                ),
+                ElevatedButton(
+                  child: Text("Pause"),
+                  onPressed: () {},
+                ),
+                ElevatedButton(
+                  child: Text("Reset"),
+                  onPressed: () {},
+                )
+              ],
+            ))
       ],
     );
   }

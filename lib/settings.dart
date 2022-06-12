@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:fizzbuzz_definitive_edition/mainstate.dart';
 import 'package:fizzbuzz_definitive_edition/model.dart';
@@ -21,10 +21,9 @@ class _SettingsState extends State<Settings> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         SizedBox(
-          height: 128,
+          height: 64,
           child: FittedBox(child: Text("Settings")),
         ),
-        SizedBox(height: 32),
         Expanded(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
@@ -38,6 +37,48 @@ class _SettingsState extends State<Settings> {
             ),
           ),
         ),
+        Container(
+            height: 64,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 32.0),
+              child: Row(
+                children: [
+                  Expanded(
+                      child: TextField(
+                    onChanged: (value) {
+                      if (value.isNotEmpty) {
+                        mainState.number = int.parse(value);
+                      }
+                    },
+                    decoration: InputDecoration(
+                      labelText: "Number",
+                      border: OutlineInputBorder(),
+                    ),
+                    keyboardType: TextInputType.number,
+                  )),
+                  SizedBox(width: 32),
+                  Expanded(
+                      child: TextField(
+                    onChanged: (value) => mainState.word = value,
+                    decoration: InputDecoration(
+                      labelText: "Word",
+                      border: OutlineInputBorder(),
+                    ),
+                  )),
+                  SizedBox(width: 32),
+                  ElevatedButton.icon(
+                      onPressed: () {
+                        mainState.matchesToDisplay.add(WordNumberMatch(
+                          word: mainState.word,
+                          number: mainState.number,
+                        ));
+                        setState(() {});
+                      },
+                      icon: Icon(Icons.add),
+                      label: Text("Add")),
+                ],
+              ),
+            ))
       ],
     );
   }
@@ -46,7 +87,7 @@ class _SettingsState extends State<Settings> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: ListView.builder(
-        itemCount: mainState.matches.length,
+        itemCount: mainState.matchesToDisplay.length,
         itemBuilder: (context, index) {
           return RowElement(index);
         },
@@ -54,13 +95,24 @@ class _SettingsState extends State<Settings> {
     );
   }
 
-  Row RowElement(int index) {
-    return Row(children: [
-      Text("${index + 1}:", style: TextStyle(fontSize: 24, color: Colors.white)),
-      SizedBox(width: 16),
-      Text(mainState.matches[index].number.toString(), style: TextStyle(fontSize: 24, color: Colors.white)),
-      Icon(Icons.arrow_right, size: 24, color: Colors.white),
-      Center(child: Text(mainState.matches[index].word, style: TextStyle(fontSize: 24, color: Colors.white))),
-    ]);
+  Widget RowElement(int index) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Row(children: [
+        OutlinedButton.icon(
+            onPressed: () {
+              mainState.matches.removeAt(index);
+              setState(() {});
+            },
+            icon: Icon(Icons.delete),
+            label: Text("Delete")),
+        SizedBox(width: 32),
+        Text("${index + 1}:", style: TextStyle(fontSize: 24, color: Colors.white)),
+        SizedBox(width: 16),
+        Text(mainState.matches[index].number.toString(), style: TextStyle(fontSize: 24, color: Colors.white)),
+        Icon(Icons.arrow_right, size: 24, color: Colors.white),
+        Center(child: Text(mainState.matches[index].word, style: TextStyle(fontSize: 24, color: Colors.white))),
+      ]),
+    );
   }
 }
